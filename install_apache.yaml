@@ -1,9 +1,16 @@
 ---
 
-- hosts: debian
+- hosts: all
   become: true
   tasks:
     - name: install apache2 package Debian
       apt:
         name: apache2
         state: latest
+      when: ansible_distribution_file_variety == "Debian"
+
+    - name: install apache package CentOS
+      yum:
+        name: httpd
+        state: latest
+      when: ansible_distribution_file_variety == "RedHat"
