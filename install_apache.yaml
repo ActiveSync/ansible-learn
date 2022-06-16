@@ -1,0 +1,9 @@
+---
+
+- hosts: debian
+  become: true
+  tasks:
+    - name: install apache2 package Debian
+      apt:
+        name: apache2
+        state: latest
