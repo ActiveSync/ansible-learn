@@ -2,15 +2,45 @@
 
 - hosts: all
   become: true
-  tasks:
-    - name: install apache2 package Debian
+  pre_tasks:
+    - name: Update Debian Servers
+      tags: always
+      apt:
+        upgrade: dist
+      when: ansible_distribution_file_variety == "Debian"
+
+    - name: Update RedHat Servers
+      tags: always
+      yum:
+        update_only: yes
+        update_cache: yes
+      when: ansible_distribution_file_variety == "RedHat"
+
+    - name: Install Apache Server on Debian
+      tags: apache, apache2, debian
       apt:
         name: apache2
         state: latest
       when: ansible_distribution_file_variety == "Debian"
 
-    - name: install apache package CentOS
+    - name: Install Apache Server on CentOS
+      tags: apache, centos, httpd
       yum:
         name: httpd
         state: latest
       when: ansible_distribution_file_variety == "RedHat"
+    
+    - name: Start service httpd, if not started
+      service:
+        name: httpd
+        state: started
+      when: ansible_distribution_file_variety == "RedHat"
+
+    - name: copy default html file for site
+      tags: apache, apache2, httpd
+      copy:
+        src: default_site.html
+        dest: /var/www/html/index.html
+        owner: root
+        group: root
+        mode: 0644
