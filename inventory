@@ -1,5 +1,11 @@
+[all]
 192.168.128.140 ansible_port=62814
 192.168.128.141 ansible_port=55161
 192.168.128.142 ansible_port=55714
 192.168.128.143 ansible_port=54543
 192.168.128.144 ansible_port=57790
+
+[all:vars]
+ansible_connection=ssh
+ansible_user=root
+
