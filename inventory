@@ -1,9 +1,20 @@
-192.168.128.140 ansible_port=62814 owner=ActiveSync1
-192.168.128.144 ansible_port=57790 owner=ActiveSync5
-192.168.128.141 ansible_port=55161 owner=ActiveSync2
-192.168.128.142 ansible_port=55714 owner=ActiveSync3
-192.168.128.143 ansible_port=54543 owner=ActiveSync4
+[STAGING_SERVERS_WEB]
+192.168.128.143 ansible_port=54543 
 
-[all:vars]
-ansible_connection=ssh
-ansible_user=root
+[PROD_SERVERS_WEB]
+192.168.128.140 ansible_port=62814 
+192.168.128.144 ansible_port=57790 
+
+[STAGING_SERVERS_DB]
+192.168.128.141 ansible_port=55161
+
+[PROD_SERVERS_DB]
+192.168.128.142 ansible_port=55714 
+
+[ALL_SERVERS_WEB:children]
+STAGING_SERVERS_WEB
+PROD_SERVERS_WEB
+
+[ALL_SERVERS_DB:children]
+STAGING_SERVERS_DB
+PROD_SERVERS_DB
