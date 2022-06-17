@@ -10,6 +10,6 @@
     <p>Ansible is awesome, owner: {{owner}}</p>
     <p>Server Host Name: {{ ansible_hostname }} <p> <br>
     <p>Server OS Family: {{ ansible_os_family }} <p> <br>
-    <p> Server IP Adress: {{ansible_all_ipv4_addresses}} <p>
+    <p> Server IP Adress: {{ansible_default_ipv4.address}} <p>
 </body>
 </html>
